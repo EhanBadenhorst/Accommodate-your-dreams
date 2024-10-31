@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Listings</title>
+    <link rel="stylesheet" href="CSS properties.css">
+    <style>
+        #map { height: 200px; width: 100%; border: 1px solid black; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>House Listings For Flats</h1>
+    </header>
+    <div class="form-container">
+        <form id="Flatsform">
+            <label for="title">House Title:</label>
+            <input type="text" id="title" required>
+
+            <label for="price">Price:R1 000 000 to R2 000 000</label>
+            <input type="number" id="price" required placeholder="Enter price" />
+
+            <label for="bedrooms">Bedrooms:</label>
+            <select id="bedrooms" required>
+                <option value="1">1</option>
+                <option value="2">2</option>
+            </select>
+
+            <label for="bathrooms">Bathrooms:</label>
+            <select id="bathrooms" required>
+                <option value="1">1</option>
+                <option value="2">2</option>
+            </select>
+
+            <label for="sqft">Square Footage:</label>
+            <input type="number" id="sqft" required>
+
+            <label for="contactInfo">Contact Information:</label>
+            <textarea id="contactInfo" required></textarea>
+
+            <label for="location">Location:</label>
+            <input type="text" id="location" required readonly>
+
+            <label for="image">Upload Image:</label>
+            <input type="file" id="image" accept="image/*" required>
+
+            <button type="submit" id="postButton">Post</button>
+            <button type="button" id="viewFlatsBtn">View Flats</button>
+
+        </form>
+
+        <div id="map"></div>
+       
+    </div>
+
+    <footer>
+        <p>&copy; Accommodate Your Dreams</p>
+    </footer>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPVq1yt81rnN_-681sg9xDD7G9IM67UWw&libraries=places&callback=initMap" async defer></script>
+    <script>
+        let map;
+        let marker;
+
+        function initMap() {
+            const defaultLocation = { lat: -33.986688, lng: 18.757395 };
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: defaultLocation,
+                zoom: 8,
+            });
+
+            marker = new google.maps.Marker({
+                position: defaultLocation,
+                map: map,
+                draggable: true,
+            });
+
+            marker.addListener("dragend", (event) => {
+                updateLocationInput(event.latLng);
+            });
+
+            map.addListener("click", (event) => {
+                marker.setPosition(event.latLng);
+                updateLocationInput(event.latLng);
+            });
+        }
+
+        function updateLocationInput(latLng) {
+            const geocoder = new google.maps.Geocoder();
+            geocoder.geocode({ location: latLng }, (results, status) => {
+                if (status === "OK" && results[0]) {
+                    document.getElementById("location").value = results[0].formatted_address;
+                } else {
+                    document.getElementById("location").value = '';
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('Flatsform');
+    const viewFlatsBtn = document.getElementById('viewFlatsBtn');
+
+    // Redirect to the View Big Estates page
+    viewFlatsBtn.addEventListener('click', function() {
+        window.location.href = "View property for flats .html";
+    });
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const title = document.getElementById('title').value;
+        const price = document.getElementById('price').value;
+        const bedrooms = document.getElementById('bedrooms').value;
+        const bathrooms = document.getElementById('bathrooms').value;
+        const sqft = document.getElementById('sqft').value;
+        const contactInfo = document.getElementById('contactInfo').value;
+        const location = document.getElementById('location').value;
+        const image = document.getElementById('image').files[0];
+
+        if (!title || !price || !bedrooms || !bathrooms || !sqft || !contactInfo || !location || !image) {
+            alert('Please fill in all fields');
+            return;
+        }
+
+        // Retrieve the existing Flatlistings from localStorage
+        let Flatlistings = JSON.parse(localStorage.getItem('Flatslistings')) || [];
+
+        // Limit to 10 listings
+        if (Flatlistings.length >= 10) {
+            Flatlistings.shift(); // Remove the oldest listing
+        }
+
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            const imageUrl = event.target.result;
+
+            const newFlat = {
+                title,
+                price,
+                bedrooms,
+                bathrooms,
+                sqft,
+                contactInfo,
+                location,
+                imageUrl
+            };
+
+            Flatlistings.push(newFlat);
+            localStorage.setItem('Flatslistings', JSON.stringify(Flatlistings));
+
+            alert('Flat posted successfully!');
+            form.reset();
+            window.location.href = "View property for flats .html";
+        };
+        
+
+
+        if (image) {
+            reader.readAsDataURL(image);
+        }
+        if (Flatlistings.length >= 10) { // Limit to 10 listings
+            Flatlistings.shift(); // Remove the oldest listing
+
+        }
+    });
+});
+    </script>
+</body>
+</html>

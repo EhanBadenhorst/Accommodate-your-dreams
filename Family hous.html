@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Family House</title>
+    <link rel="stylesheet" href="CSS properties.css">
+    <style>
+        #map { height: 200px; width: 100%; border: 1px solid black; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Post a Family House</h1>
+    </header>
+    <div class="form-container">
+        <form id="familyHouseForm">
+            <label for="title">House Title:</label>
+            <input type="text" id="title" required>
+
+            <label for="price">Price: R2 000 000 to R5 000 000</label>
+            <input type="number" id="price" required placeholder="Enter price">
+
+            <label for="bedrooms">Bedrooms:</label>
+            <select id="bedrooms" required>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </select>
+
+            <label for="bathrooms">Bathrooms:</label>
+            <select id="bathrooms" required>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </select>
+
+            <label for="sqft">Square Footage:</label>
+            <input type="number" id="sqft" required>
+
+            <label for="contactInfo">Contact Information:</label>
+            <textarea id="contactInfo" required></textarea>
+
+            <label for="location">Location:</label>
+            <input type="text" id="location" required readonly>
+
+            <label for="image">Upload Image:</label>
+            <input type="file" id="image" accept="image/*" required>
+            
+            <button type="submit" id="postButton">Post</button>
+            <button type="button" id="viewFamilyHousesBtn">View Family Houses</button>
+        </form>
+
+        <div id="map"></div>
+    </div>
+
+    <footer>
+        <p>&copy; Accommodate Your Dreams</p>
+    </footer>
+
+    <script>
+        let map;
+        let marker;
+    
+        // Initialize Google Maps
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: -33.986688, lng: 18.757395 },
+                zoom: 8
+            });
+    
+            const input = document.getElementById('location');
+            const searchBox = new google.maps.places.SearchBox(input);
+    
+            searchBox.addListener('places_changed', function() {
+                const places = searchBox.getPlaces();
+                if (places.length === 0) return;
+                const place = places[0];
+                if (!place.geometry) return;
+    
+                map.setCenter(place.geometry.location);
+                map.setZoom(15);
+    
+                if (marker) marker.setMap(null);
+                marker = new google.maps.Marker({
+                    map: map,
+                    position: place.geometry.location,
+                    draggable: true
+                });
+    
+                input.value = place.formatted_address;
+            });
+    
+            map.addListener('click', function(event) {
+                const latLng = event.latLng;
+    
+                if (marker) {
+                    marker.setPosition(latLng);
+                } else {
+                    marker = new google.maps.Marker({
+                        position: latLng,
+                        map: map,
+                        draggable: true
+                    });
+                }
+    
+                updateLocationInput(latLng);
+            });
+        }
+    
+        function updateLocationInput(latLng) {
+            const geocoder = new google.maps.Geocoder();
+            geocoder.geocode({ location: latLng }, (results, status) => {
+                if (status === "OK" && results[0]) {
+                    document.getElementById("location").value = results[0].formatted_address;
+                } else {
+                    document.getElementById("location").value = '';
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('familyHouseForm');
+            const viewFamilyHousesBtn = document.getElementById('viewFamilyHousesBtn');
+
+            viewFamilyHousesBtn.addEventListener('click', function() {
+                window.location.href = "View family houses.html";
+            });
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const title = document.getElementById('title').value;
+                const price = document.getElementById('price').value;
+                const bedrooms = document.getElementById('bedrooms').value;
+                const bathrooms = document.getElementById('bathrooms').value;
+                const sqft = document.getElementById('sqft').value;
+                const contactInfo = document.getElementById('contactInfo').value;
+                const location = document.getElementById('location').value;
+                const image = document.getElementById('image').files[0];
+
+                if (!title || !price || !bedrooms || !bathrooms || !sqft || !contactInfo || !location || !image) {
+                    alert('Please fill in all fields');
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const imageUrl = event.target.result;
+
+                    const newProperty = {
+                        title,
+                        price,
+                        bedrooms,
+                        bathrooms,
+                        sqft,
+                        contactInfo,
+                        location,
+                        imageUrl
+                    };
+
+                    let familyHouseListings = JSON.parse(localStorage.getItem('familyHouseListings')) || [];
+                    familyHouseListings.push(newProperty);
+                    localStorage.setItem('familyHouseListings', JSON.stringify(familyHouseListings));
+
+                    alert('Property posted successfully!');
+                    form.reset();
+                    window.location.href = "View family houses.html";
+                };
+
+                if (image) {
+                    reader.readAsDataURL(image);
+                }
+            });
+        });
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPVq1yt81rnN_-681sg9xDD7G9IM67UWw&libraries=places&callback=initMap" async defer></script>
+</body>
+</html>

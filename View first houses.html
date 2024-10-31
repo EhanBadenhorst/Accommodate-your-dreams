@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View First Houses</title>
+    <link rel="stylesheet" href="CSS properties.css">
+    <style>
+        .property { border: 1px solid #ddd; margin: 10px; padding: 10px; }
+        .property img { max-width: 100%; height: auto; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Available First Houses</h1>
+    </header>
+
+    <div id="properties"></div>
+
+    <footer>
+        <p>&copy; Accommodate Your Dreams</p>
+    </footer>
+
+    <script>
+        const listings = JSON.parse(localStorage.getItem('houseListings')) || [];
+        const estatesContainer = document.getElementById('properties');
+
+        if (listings.length === 0) {
+            estatesContainer.innerHTML = "<p>No First houses available at the moment.</p>";
+        } else {
+            listings.forEach(estate => {
+                const estateDiv = document.createElement('div');
+                estateDiv.className = 'property';
+                estateDiv.innerHTML = `
+                    <img src="${estate.imageUrl}" alt="${estate.title}">
+                    <h3>${estate.title}</h3>
+                    <p>Price: R${Number(estate.price).toLocaleString()}</p>
+                    <p>Bedrooms: ${estate.bedrooms}</p>
+                    <p>Bathrooms: ${estate.bathrooms}</p>
+                    <p>Contact Information: ${estate.contactInfo}</p>
+                    <p>Square Footage: ${estate.sqft} sq ft</p>
+                    <p>Location: ${estate.location}</p>
+                `;
+                estatesContainer.appendChild(estateDiv);
+            });
+        }
+    </script>
+</body>
+</html>

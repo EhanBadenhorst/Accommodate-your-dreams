@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Family Houses</title>
+    <link rel="stylesheet" href="CSS properties.css">
+    <style>
+        .property { border: 1px solid #ddd; margin: 10px; padding: 10px; }
+        .property img { max-width: 100%; height: auto; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Available Family Houses</h1>
+    </header>
+
+    <div id="properties"></div>
+
+    <footer>
+        <p>&copy; Accommodate Your Dreams</p>
+    </footer>
+
+    <script>
+        // Use a specific key for family house listings
+        const listings = JSON.parse(localStorage.getItem('familyHouseListings')) || [];
+        const propertiesContainer = document.getElementById('properties');
+
+        // Display message if no properties are available
+        if (listings.length === 0) {
+            propertiesContainer.innerHTML = "<p>No family houses available at the moment.</p>";
+        } else {
+            // Loop through listings and create HTML for each property
+            listings.forEach(property => {
+                const propertyDiv = document.createElement('div');
+                propertyDiv.className = 'property';
+                propertyDiv.innerHTML = `
+                    <img src="${property.imageUrl}" alt="${property.title}" style="width: 100%; height: auto;">
+                    <h3>${property.title}</h3>
+                    <p>Price: R${Number(property.price).toLocaleString()}</p>
+                    <p>Bedrooms: ${property.bedrooms}</p>
+                    <p>Bathrooms: ${property.bathrooms}</p>
+                    <p>Square Footage: ${property.sqft} sq ft</p>
+                    <p>Contact Information: ${property.contactInfo}</p>
+                    <p>Location: ${property.location}</p>
+                `;
+                propertiesContainer.appendChild(propertyDiv);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-image: url('Post\ site\ background.jpeg'); /* Replace with your actual background image */
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 50px;
+    margin: 0;
+}
+
+h1 {
+    margin-bottom: 30px;
+    font-size: 36px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+
+/* House Option Styles */
+.house-option {
+    display: inline-block;
+    margin: 20px;
+    text-align: center;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.house-option img {
+    width: 300px;
+    height: 200px;
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.house-option button {
+    width: 100%;
+    padding: 15px;
+    font-size: 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    border-radius: 0 0 10px 10px;
+}
+
+.house-option button:hover {
+    background-color: #45a049;
+}
+
+.house-option:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.house-option:hover img {
+    transform: scale(1.1);
+}
+
+/* Image Styling */
+.house-option img {
+    border-bottom: 2px solid #4CAF50;
+}
+

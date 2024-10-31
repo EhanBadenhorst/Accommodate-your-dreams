@@ -1,0 +1,176 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Raleway:wght@500;700&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url('Will\ main\ background.jpeg')no-repeat center center/cover;
+    color: #333;
+}
+
+/* Header styling */
+header {
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    font-family: 'Raleway', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: 1.5px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+nav {
+    margin-top: 20px;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav ul li a {
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    background-color: #34adf3;
+    border-radius: 25px;
+    transition: background-color 0.3s ease;
+}
+
+nav ul li a:hover {
+    background-color: #2881c2;
+}
+
+/* Main Section */
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+}
+
+/* Login and Signup Forms */
+#auth-section {
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 100%;
+}
+
+#auth-section h2 {
+    font-family: 'Raleway', sans-serif;
+    font-size: 2rem;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form input {
+    margin-bottom: 15px;
+    padding: 12px 15px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+form button {
+    padding: 12px;
+    background-color: #34adf3;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #2881c2;
+}
+
+/* Success and Error Messages */
+#login-message, #signup-message {
+    color: red;
+    font-size: 0.9rem;
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* Property Section */
+#property-section {
+    text-align: center;
+    margin-top: 30px;
+}
+
+#property-section h2 {
+    font-family: 'Raleway', sans-serif;
+    font-size: 2rem;
+    color: #34adf3;
+}
+
+#property-section nav ul {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+#property-section nav ul li a {
+    font-family: 'Poppins', sans-serif;
+    color: #34adf3;
+    padding: 10px 20px;
+    text-decoration: none;
+    background-color: rgba(52, 173, 243, 0.1);
+    border: 1px solid #34adf3;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+#property-section nav ul li a:hover {
+    background-color: #34adf3;
+    color: white;
+}
+
+#post-property {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #007BFF;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+#post-property:hover {
+    background-color: #0056b3;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #auth-section {
+        max-width: 90%;
+    }
+}

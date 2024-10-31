@@ -1,0 +1,94 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+}
+header {
+    background-image: url('Will main back.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    text-align: center;
+    padding: 7rem 0; 
+    color: #ffffff; /* Change text color to white */
+    font-family: 'Georgia', Arial, Helvetica, sans-serif; 
+}
+    
+
+
+header h1 {
+    margin: 0;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    background-color: #968c8c;
+    padding: 0.5rem 0;
+}
+
+nav a {
+    color: #fff;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+}
+
+nav a:hover {
+    background-color: #555;
+}
+
+.container {
+    padding: 1rem;
+}
+
+.hero {
+    color: #608860;
+    padding: 2rem;
+    text-align: center;
+    
+}
+
+.properties {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.property {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 1rem;
+    width: calc(33.333% - 2rem);
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.property img {
+    max-width: 100%;
+    height: auto;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 1S;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .property {
+        width: calc(50% - 2rem);
+    }
+}
+
+@media (max-width: 480px) {
+    .property {
+        width: 100%;
+    }
+}

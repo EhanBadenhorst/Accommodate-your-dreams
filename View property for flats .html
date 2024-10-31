@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Houses</title>
+    <link rel="stylesheet" href="CSS properties.css">
+</head>
+<body>
+    <header>
+        <h1>Available House Listings For Flats</h1>
+    </header>
+
+    <div id="properties" class="properties">
+        <!-- Listings will be dynamically inserted here -->
+    </div>
+
+    <footer>
+        <p>&copy; Accommodate Your Dreams</p>
+    </footer>
+
+    <script>
+        // Retrieve listings specifically for flats
+        const listings = JSON.parse(localStorage.getItem('Flatslisting')) || [];
+        const  FlatsContainer= document.getElementById('properties'); // Change 'Flats' to 'properties'
+    
+        // Display message if no properties are available
+        if (listings.length === 0) {
+            FlatsContainer.innerHTML = "<p>No Flats available at the moment.</p>"; // Use estatesContainer here
+        } else {
+            // Loop through listings and create HTML for each property
+            listings.forEach(Flats => {
+                const FlatseDiv = document.createElement('div');
+                FlatseDiv.className = 'Flats';
+                FlatseDiv.innerHTML = `
+                    <img src="${Flats.imageUrl}" alt="${Flats.title}">
+                    <h3>${Flats.title}</h3>
+                    <p>Price: R${Number(Flats.price).toLocaleString()}</p>
+                    <p>Bedrooms: ${Flats.bedrooms}</p>
+                    <p>Bathrooms: ${Flats.bathrooms}</p>
+                    <p>Contact Information: ${Flats.contactInfo}</p>
+                    <p>Square Footage: ${Flats.sqft} sq ft</p>
+                    <p>Location: ${Flats.location}</p>
+                `;
+                FlatsContainer.appendChild(FlatseDiv); // Append to estatesContainer
+            });
+           
+        }
+    </script>
